@@ -20,13 +20,13 @@ import java.lang.annotation.*;
 /**
  * @author Kitetop <1363215999@qq.com>
  * @version Release: v1.0
- * Date: 2019/07/22
- * table target,entity class use this target to order which the data table is
+ * Date: 2019/07/24
+ * the column target, Data table fields corresponding to specified entity attributes
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Table {
+public @interface Column {
 
-    String value() default "";
+    String name() default "";
 }

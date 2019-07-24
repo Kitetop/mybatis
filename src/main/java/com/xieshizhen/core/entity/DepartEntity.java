@@ -1,5 +1,6 @@
 package com.xieshizhen.core.entity;
 
+import com.xieshizhen.core.target.Column;
 import com.xieshizhen.core.target.Table;
 
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ import java.util.Map;
 public class DepartEntity {
     private Integer id;
     @NotNull(message = "the depart name can not be null")
+    @Column(name = "depart")
     private String depart;
 
     public Integer getId() {

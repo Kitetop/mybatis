@@ -14,7 +14,5 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface DepartMapper {
-    @InsertProvider(value = ProviderUtils.class, method = "save")
-    void save(DepartEntity entity);
+public interface DepartMapper extends RepositoryMapper<DepartEntity, Integer> {
 }
