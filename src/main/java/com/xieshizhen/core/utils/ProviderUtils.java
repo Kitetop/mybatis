@@ -16,43 +16,51 @@
 package com.xieshizhen.core.utils;
 
 
+import com.xieshizhen.core.target.Column;
 import com.xieshizhen.core.target.Table;
+import org.apache.ibatis.annotations.Param;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * the common core curd operation for Mapper provider
+ * support basic operation method
+ *
  * @author Kitetop <1363215999@qq.com>
  * @version Release: v1.0
  * Date: 2019/07/20
- * @Description the common core curd operation for Mapper provider
  */
+@SuppressWarnings("unchecked")
 public class ProviderUtils {
 
+
     public <T> String save(T entity) throws Exception {
-        String table = entity.getClass().getSimpleName().replace("Entity", "");
-        try {
-            @SuppressWarnings("unchecked")
-            Map<String, String> message = (Map<String, String>) entity.getClass().getMethod("getInfo").invoke(entity);
-            Integer id = (Integer) entity.getClass().getMethod("getId").invoke(entity);
-            SqlBuildUtils build = SqlBuildUtils.getInstance();
-            System.out.println(build);
-            if (id == null) {
-                return build.insert(table, message);
-            }
-            return build.update(table, message);
-        } catch (Exception e) {
-            throw new ExceptionUtils(500, e.getMessage());
+        Map<String, Object> result = this.parseEntity(entity);
+        Integer id = (Integer) entity.getClass().getMethod("getId").invoke(entity);
+        SqlBuildUtils build = SqlBuildUtils.getInstance();
+        if(id == null) {
+            return build.insert((String) result.get("table"), (Map<String, String>) result.get("message"));
         }
+        return build.update((String) result.get("table"), (Map<String, String>) result.get("message"));
     }
 
-    @SuppressWarnings("unchecked")
+    public <T, S> String findById(@Param("entity") Class<T> Entity) {
+        String table = this.getTable(Entity);
+        SqlBuildUtils build = SqlBuildUtils.getInstance();
+        return build.selectById(table);
+    }
+
+
     private <T> Map<String, Object> parseEntity(T entity) throws Exception {
         Map<String, Object> result = new HashMap<>();
         Class<T> Entity = (Class<T>) entity.getClass();
-        result.put("id", Entity.getMethod("getId").invoke(entity));
         // set the table name
         result.put("table", this.getTable(Entity));
+        // get all member variables
+        result.put("message", this.getMessage(Entity));
         return result;
     }
 
@@ -60,15 +68,43 @@ public class ProviderUtils {
      * get the table name,if have not use the table target
      * The table name will be set to entity's class simple name
      * this name will be removed the string of Entity.
+     *
      * @param Entity
      * @param <T>
      * @return
      */
     private <T> String getTable(Class<T> Entity) {
         String table = Entity.getSimpleName().replace("Entity", "");
-        if(Entity.isAnnotationPresent(Table.class)) {
+        if (Entity.isAnnotationPresent(Table.class)) {
             table = Entity.getAnnotation(Table.class).value();
         }
         return table;
+    }
+
+    /**
+     * Get the mapping relationship between entity class attributes and data table fields
+     * pass the static members, So you can safely define constants in entity classes
+     *
+     * @param Entity
+     * @param <T>
+     * @return
+     */
+    private <T> Map<String, String> getMessage(Class<T> Entity) {
+        Map<String, String> message = new HashMap<>();
+        Field[] members = Entity.getDeclaredFields();
+        String name;
+        for (Field member : members) {
+            //pass static variable
+            if (Modifier.isStatic(member.getModifiers())) {
+                continue;
+            }
+            name = member.getName();
+            if (member.isAnnotationPresent(Column.class)) {
+                message.put(member.getAnnotation(Column.class).name(), name);
+                continue;
+            }
+            message.put(name, name);
+        }
+        return message;
     }
 }

@@ -34,6 +34,22 @@ public class SqlBuildUtils {
     }
 
     /**
+     * Construct pretreatment for inserting multiple SQL statements
+     *
+     * @param table
+     * @param values
+     * @return
+     */
+    public String insertAll(String table, Map<String, String> values) {
+        SQL sql = new SQL();
+        sql.INSERT_INTO(table);
+        for(Map.Entry<String, String> entry : values.entrySet()) {
+            sql.VALUES(entry.getKey(), "#{item." + entry.getValue() + "}");
+        }
+        return sql.toString();
+    }
+
+    /**
      * update the data by primary key
      * id is default primary key
      * @param table
@@ -46,6 +62,20 @@ public class SqlBuildUtils {
         for(Map.Entry<String, String> entry : values.entrySet()) {
             sql.SET(entry.getKey() + "=#{" + entry.getValue() + "}");
         }
+        sql.WHERE("id = #{id}");
+        System.out.println(sql.toString());
+        return sql.toString();
+    }
+
+    /**
+     * find a row according the number of id
+     * @param table
+     * @return
+     */
+    public String selectById(String table) {
+        SQL sql = new SQL();
+        sql.SELECT("*");
+        sql.FROM(table);
         sql.WHERE("id = #{id}");
         System.out.println(sql.toString());
         return sql.toString();

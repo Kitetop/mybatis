@@ -17,6 +17,7 @@ package com.xieshizhen.core.mapper;
 
 import com.xieshizhen.core.utils.ProviderUtils;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
 
 import java.util.Optional;
@@ -33,5 +34,5 @@ public interface RepositoryMapper<T, S> {
     void save(T entity);
 
     @SelectProvider(value = ProviderUtils.class, method = "findById")
-    Optional<T> findById(S id);
+    Optional<T> findById(@Param("id") S id, @Param("entity") Class<T> Entity);
 }
