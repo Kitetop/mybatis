@@ -82,6 +82,19 @@ public class SqlBuildUtils {
     }
 
     /**
+     * delete one row according to the value of id
+     *
+     * @param table
+     * @return
+     */
+    String deleteById(String table) {
+        SQL sql = new SQL();
+        sql.DELETE_FROM(table);
+        sql.WHERE("id = #{id}");
+        return sql.toString();
+    }
+
+    /**
      * use single model get this class object
      * @return
      */

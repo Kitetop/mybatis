@@ -23,6 +23,7 @@ import org.apache.ibatis.annotations.Param;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,24 +37,71 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class ProviderUtils {
 
-
+    /**
+     * the common save and update method
+     * if the primary key exist, the code will update the row
+     *
+     * @param entity
+     * @param <T>
+     * @return
+     * @throws Exception
+     */
     public <T> String save(T entity) throws Exception {
         Map<String, Object> result = this.parseEntity(entity);
         Integer id = (Integer) entity.getClass().getMethod("getId").invoke(entity);
         SqlBuildUtils build = SqlBuildUtils.getInstance();
-        if(id == null) {
+        if (id == null) {
             return build.insert((String) result.get("table"), (Map<String, String>) result.get("message"));
         }
         return build.update((String) result.get("table"), (Map<String, String>) result.get("message"));
     }
 
-    public <T, S> String findById(@Param("entity") Class<T> Entity) {
+    /**
+     * the common save all function, at this case, database need execute more than one
+     * sql statement, make sure your sql supper this
+     *
+     * @param entities
+     * @param <T>
+     * @return
+     * @throws Exception
+     */
+    public <T> String saveAll(@Param("entities") List<T> entities ) throws Exception {
+        Map<String, Object> result = this.parseEntity(entities.get(0));
+        StringBuilder builder = new StringBuilder();
+        builder.append("<script> <foreach item = 'item' index = 'index' collection = 'entities' separator = ';'>");
+        String sql = SqlBuildUtils.getInstance().insertAll((String) result.get("table"), (Map<String, String>) result.get("message"));
+        builder.append(sql);
+        builder.append("</foreach> </script>");
+        return builder.toString();
+    }
+
+    /**
+     * the common select by id method
+     *
+     * @param Entity
+     * @param <T>
+     * @return
+     */
+    public <T> String findById(@Param("entity") Class<T> Entity) {
         String table = this.getTable(Entity);
         SqlBuildUtils build = SqlBuildUtils.getInstance();
         return build.selectById(table);
     }
 
+    public <T> String deleteById(@Param("entity") Class<T> Entity) {
+        String table = this.getTable(Entity);
+        SqlBuildUtils build = SqlBuildUtils.getInstance();
+        return build.deleteById(table);
+    }
 
+    /**
+     * the entry of analysis the entity object
+     *
+     * @param entity
+     * @param <T>
+     * @return
+     * @throws Exception
+     */
     private <T> Map<String, Object> parseEntity(T entity) throws Exception {
         Map<String, Object> result = new HashMap<>();
         Class<T> Entity = (Class<T>) entity.getClass();

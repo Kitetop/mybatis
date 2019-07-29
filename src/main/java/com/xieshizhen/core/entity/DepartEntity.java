@@ -13,7 +13,7 @@ import java.util.Map;
  * Date: 2019/07/20
  * @Description the depart entity
  */
-@Table(value = "manage_default")
+@Table(value = "manage_depart")
 public class DepartEntity {
     private Integer id;
     @NotNull(message = "the depart name can not be null")

@@ -16,10 +16,9 @@
 package com.xieshizhen.core.mapper;
 
 import com.xieshizhen.core.utils.ProviderUtils;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,9 +29,48 @@ import java.util.Optional;
  */
 public interface RepositoryMapper<T, S> {
 
+    /**
+     * if the entity's primary key not null, this method will update this row
+     * (find this row by primary key) so set primary by yourself is not support.
+     * after run this method, the primary key id will be add in the entity object
+     * It is recommended to open the database to return the number of affected rows configuration
+     * such as: jdbc:mysql:xxx?useAffectedRows=true
+     *
+     * @param entity
+     * @return
+     */
     @InsertProvider(value = ProviderUtils.class, method = "save")
-    void save(T entity);
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    Integer save(T entity);
 
+    /**
+     * If you want to use this method, you must turn on the option to allow multiple
+     * SQL statement to be executed
+     * such as: jdbc:mysql:xxx?allowMultiQueries=true
+     * @param entities
+     * @return
+     */
+    @InsertProvider(value = ProviderUtils.class, method = "saveAll")
+    Integer saveAll(@Param("entities") List<T> entities);
+
+    /**
+     * This method is only suitable for the case where the field name of the data
+     * table is consistent with the property of the entity class,
+     * If inconsistent, rewrite this method, add @Results Target
+     * @param id
+     * @param Entity
+     * @return
+     */
     @SelectProvider(value = ProviderUtils.class, method = "findById")
     Optional<T> findById(@Param("id") S id, @Param("entity") Class<T> Entity);
+
+    /**
+     * Delete one row according to the primary key
+     *
+     * @param id
+     * @param Entity
+     * @return
+     */
+    @DeleteProvider(type = ProviderUtils.class, method = "deleteById")
+    Integer deleteById(@Param("id") S id, @Param("entity") Class<T> Entity);
 }
