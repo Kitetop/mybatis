@@ -20,5 +20,5 @@ package demo.mybatis;
  * @version Release: v1.0
  * Date: 2019/08/30
  */
-public class SQLConstruction {
+public class SQLConstructorTest {
 }
