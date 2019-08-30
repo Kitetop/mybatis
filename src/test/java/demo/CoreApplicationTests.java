@@ -1,7 +1,6 @@
-package com.xieshizhen;
+package demo;
 
-import com.xieshizhen.mybatis.ProviderTest;
-import demo.CoreApplication;
+import demo.mybatis.ProviderTest;
 import demo.service.DepartService;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = CoreApplication.class)
+@SpringBootTest
 public class CoreApplicationTests {
     private DepartService departService;
     private ProviderTest providerTest;
