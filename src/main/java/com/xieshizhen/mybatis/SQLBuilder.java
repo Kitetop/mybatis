@@ -1,4 +1,4 @@
-package com.xieshizhen.core.utils;
+package com.xieshizhen.mybatis;
 
 import org.apache.ibatis.jdbc.SQL;
 
@@ -8,13 +8,13 @@ import java.util.Map;
  * @author Kitetop <1363215999@qq.com>
  * @version Release: v1.0
  * Date: 2019/07/22
- * @Description construct the sql query
+ * Construct the SQL statement
  */
-public class SqlBuildUtils {
+public class SQLBuilder {
 
-    private static SqlBuildUtils build = null;
+    private static SQLBuilder build = null;
 
-    private SqlBuildUtils() {}
+    private SQLBuilder() {}
 
     /**
      * add data to database
@@ -29,7 +29,6 @@ public class SqlBuildUtils {
         for (Map.Entry<String, String> entry : values.entrySet()) {
             sql.VALUES(entry.getKey(), "#{" + entry.getValue() + "}");
         }
-        System.out.println(sql.toString());
         return sql.toString();
     }
 
@@ -63,7 +62,6 @@ public class SqlBuildUtils {
             sql.SET(entry.getKey() + "=#{" + entry.getValue() + "}");
         }
         sql.WHERE("id = #{id}");
-        System.out.println(sql.toString());
         return sql.toString();
     }
 
@@ -77,7 +75,6 @@ public class SqlBuildUtils {
         sql.SELECT("*");
         sql.FROM(table);
         sql.WHERE("id = #{id}");
-        System.out.println(sql.toString());
         return sql.toString();
     }
 
@@ -98,9 +95,9 @@ public class SqlBuildUtils {
      * use single model get this class object
      * @return
      */
-    public static SqlBuildUtils getInstance() {
+    public static SQLBuilder getInstance() {
         if(build == null) {
-            build = new SqlBuildUtils();
+            build = new SQLBuilder();
         }
         return build;
     }

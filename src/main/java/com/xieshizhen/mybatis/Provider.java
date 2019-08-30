@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xieshizhen.core.utils;
+package com.xieshizhen.mybatis;
 
 
-import com.xieshizhen.core.target.Column;
-import com.xieshizhen.core.target.Table;
+import com.xieshizhen.target.Column;
+import com.xieshizhen.target.Table;
 import org.apache.ibatis.annotations.Param;
 
 import java.lang.reflect.Field;
@@ -35,7 +35,7 @@ import java.util.Map;
  * Date: 2019/07/20
  */
 @SuppressWarnings("unchecked")
-public class ProviderUtils {
+public class Provider {
 
     /**
      * the common save and update method
@@ -49,7 +49,7 @@ public class ProviderUtils {
     public <T> String save(T entity) throws Exception {
         Map<String, Object> result = this.parseEntity(entity);
         Integer id = (Integer) entity.getClass().getMethod("getId").invoke(entity);
-        SqlBuildUtils build = SqlBuildUtils.getInstance();
+        SQLBuilder build = SQLBuilder.getInstance();
         if (id == null) {
             return build.insert((String) result.get("table"), (Map<String, String>) result.get("message"));
         }
@@ -69,7 +69,7 @@ public class ProviderUtils {
         Map<String, Object> result = this.parseEntity(entities.get(0));
         StringBuilder builder = new StringBuilder();
         builder.append("<script> <foreach item = 'item' index = 'index' collection = 'entities' separator = ';'>");
-        String sql = SqlBuildUtils.getInstance().insertAll((String) result.get("table"), (Map<String, String>) result.get("message"));
+        String sql = SQLBuilder.getInstance().insertAll((String) result.get("table"), (Map<String, String>) result.get("message"));
         builder.append(sql);
         builder.append("</foreach> </script>");
         return builder.toString();
@@ -84,13 +84,13 @@ public class ProviderUtils {
      */
     public <T> String findById(@Param("entity") Class<T> Entity) {
         String table = this.getTable(Entity);
-        SqlBuildUtils build = SqlBuildUtils.getInstance();
+        SQLBuilder build = SQLBuilder.getInstance();
         return build.selectById(table);
     }
 
     public <T> String deleteById(@Param("entity") Class<T> Entity) {
         String table = this.getTable(Entity);
-        SqlBuildUtils build = SqlBuildUtils.getInstance();
+        SQLBuilder build = SQLBuilder.getInstance();
         return build.deleteById(table);
     }
 

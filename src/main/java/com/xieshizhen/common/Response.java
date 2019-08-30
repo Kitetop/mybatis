@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xieshizhen.core.utils;
+package com.xieshizhen.common;
 
 /**
  * @author Kitetop <1363215999@qq.com>
@@ -21,13 +21,13 @@ package com.xieshizhen.core.utils;
  * Date: 2019/07/29
  * unified response class
  */
-public class ResponseUtils {
+public class Response {
     private Integer status = 200;
     private Object message;
     private Object data;
-    private static ResponseUtils utils = null;
+    private static Response utils = null;
 
-    public <T, S> ResponseUtils success(T data, S message) {
+    public <T, S> Response success(T data, S message) {
         utils.setData(data);
         utils.setStatus(200);
         utils.setMessage(message);
@@ -42,7 +42,7 @@ public class ResponseUtils {
      * @param <S>
      * @return
      */
-    public <S> ResponseUtils success(Integer status, S message) {
+    public <S> Response success(Integer status, S message) {
         utils.setMessage(message);
         utils.setData(null);
         utils.setStatus(status);
@@ -56,14 +56,14 @@ public class ResponseUtils {
      * @param <T>
      * @return
      */
-    public <T> ResponseUtils success(T data) {
+    public <T> Response success(T data) {
         utils.setMessage(null);
         utils.setData(data);
         utils.setStatus(200);
         return utils;
     }
 
-    public <S> ResponseUtils error(Integer status, S message) {
+    public <S> Response error(Integer status, S message) {
         utils.setData(null);
         utils.setStatus(status);
         utils.setMessage(message);
@@ -75,9 +75,9 @@ public class ResponseUtils {
      *
      * @return
      */
-    public static ResponseUtils getInstance() {
+    public static Response getInstance() {
         if (utils == null) {
-            utils = new ResponseUtils();
+            utils = new Response();
         }
         return utils;
     }

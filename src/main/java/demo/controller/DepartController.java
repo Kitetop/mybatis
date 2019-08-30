@@ -1,7 +1,7 @@
-package com.xieshizhen.core.controller;
+package demo.controller;
 
-import com.xieshizhen.core.entity.DepartEntity;
-import com.xieshizhen.core.service.DepartService;
+import demo.entity.DepartEntity;
+import demo.service.DepartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

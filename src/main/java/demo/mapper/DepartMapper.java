@@ -1,8 +1,7 @@
-package com.xieshizhen.core.mapper;
+package demo.mapper;
 
-import com.xieshizhen.core.entity.DepartEntity;
-import com.xieshizhen.core.utils.ProviderUtils;
-import org.apache.ibatis.annotations.InsertProvider;
+import com.xieshizhen.mybatis.RepositoryMapper;
+import demo.entity.DepartEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

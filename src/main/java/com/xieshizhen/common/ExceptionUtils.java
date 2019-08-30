@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xieshizhen.core.utils;
+package com.xieshizhen.common;
 
 /**
  * @author Kitetop <1363215999@qq.com>
@@ -23,11 +23,11 @@ package com.xieshizhen.core.utils;
 public class ExceptionUtils extends RuntimeException {
     private Integer status;
     private String message;
-    private Object data;
 
     public ExceptionUtils(Integer status, String message) {
         super(message);
         this.status = status;
+        this.message = message;
     }
 
     public Integer getStatus() {
@@ -45,13 +45,5 @@ public class ExceptionUtils extends RuntimeException {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
     }
 }

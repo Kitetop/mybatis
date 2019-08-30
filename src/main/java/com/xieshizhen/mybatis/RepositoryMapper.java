@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xieshizhen.core.mapper;
+package com.xieshizhen.mybatis;
 
-import com.xieshizhen.core.utils.ProviderUtils;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -39,7 +38,7 @@ public interface RepositoryMapper<T, S> {
      * @param entity
      * @return
      */
-    @InsertProvider(value = ProviderUtils.class, method = "save")
+    @InsertProvider(value = Provider.class, method = "save")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     Integer save(T entity);
 
@@ -47,21 +46,23 @@ public interface RepositoryMapper<T, S> {
      * If you want to use this method, you must turn on the option to allow multiple
      * SQL statement to be executed
      * such as: jdbc:mysql:xxx?allowMultiQueries=true
+     *
      * @param entities
      * @return
      */
-    @InsertProvider(value = ProviderUtils.class, method = "saveAll")
+    @InsertProvider(value = Provider.class, method = "saveAll")
     Integer saveAll(@Param("entities") List<T> entities);
 
     /**
      * This method is only suitable for the case where the field name of the data
      * table is consistent with the property of the entity class,
      * If inconsistent, rewrite this method, add @Results Target
+     *
      * @param id
      * @param Entity
      * @return
      */
-    @SelectProvider(value = ProviderUtils.class, method = "findById")
+    @SelectProvider(value = Provider.class, method = "findById")
     Optional<T> findById(@Param("id") S id, @Param("entity") Class<T> Entity);
 
     /**
@@ -71,6 +72,6 @@ public interface RepositoryMapper<T, S> {
      * @param Entity
      * @return
      */
-    @DeleteProvider(type = ProviderUtils.class, method = "deleteById")
+    @DeleteProvider(type = Provider.class, method = "deleteById")
     Integer deleteById(@Param("id") S id, @Param("entity") Class<T> Entity);
 }

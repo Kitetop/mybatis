@@ -1,7 +1,7 @@
-package com.xieshizhen.core.entity;
+package demo.entity;
 
-import com.xieshizhen.core.target.Column;
-import com.xieshizhen.core.target.Table;
+import com.xieshizhen.target.Column;
+import com.xieshizhen.target.Table;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
