@@ -83,7 +83,7 @@ public class SQLConstructor {
     public SQLConstructor update(String table, Map<String, String> values) {
         this.sql.UPDATE(table);
         for (Map.Entry<String, String> entry : values.entrySet()) {
-            sql.SELECT(entry.getKey() + "=#{" + entry.getValue() + "}");
+            sql.SET(entry.getKey() + "=#{" + entry.getValue() + "}");
         }
         return this;
     }
@@ -134,7 +134,7 @@ public class SQLConstructor {
     public String page() {
         StringBuilder builder = new StringBuilder();
         builder.append(this.sql);
-        builder.append("LIMIT #{page}, #{limit}");
+        builder.append("LIMIT #{offset}, #{limit}");
         return builder.toString();
     }
 

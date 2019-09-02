@@ -37,4 +37,24 @@ public class DepartService {
     public DepartEntity findById(Integer id) {
         return departMapper.findById(id, DepartEntity.class).orElse(null);
     }
+
+    public List<DepartEntity> findByName(String where) {
+        return departMapper.findByName(where);
+    }
+
+    public List<DepartEntity> findByPage(String where, Integer page, Integer limit) {
+        return departMapper.findPage(where, (page - 1) * limit , limit);
+    }
+
+    public List<DepartEntity> findByOrder(String where, String order) {
+        return departMapper.findOrder(where, order);
+    }
+
+    public Integer updateByName(String depart, String where) {
+        return departMapper.updateByName(depart, where);
+    }
+
+    public Integer deleteByName(String where) {
+        return departMapper.deleteByName(where);
+    }
 }

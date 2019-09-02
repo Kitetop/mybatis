@@ -1,8 +1,7 @@
 package demo;
 
 import demo.mybatis.ProviderTest;
-import demo.service.DepartService;
-import org.junit.Before;
+import demo.mybatis.SQLConstructorTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CoreApplicationTests {
-    private DepartService departService;
+
     private ProviderTest providerTest;
+    private SQLConstructorTest sqlConstructorTest;
 
-
-    @Before
-    public void init() {
-        this.providerTest = new ProviderTest(this.departService);
-    }
 
     @Test
     @Transactional
@@ -28,8 +23,19 @@ public class CoreApplicationTests {
         this.providerTest.entry();
     }
 
+    @Test
+    @Transactional
+    public void SQLConstructorTest() {
+        this.sqlConstructorTest.entry();
+    }
+
     @Autowired
-    public void setDepartService(DepartService departService) {
-        this.departService = departService;
+    public void setProviderTest(ProviderTest providerTest) {
+        this.providerTest = providerTest;
+    }
+
+    @Autowired
+    public void setSqlConstructorTest(SQLConstructorTest sqlConstructorTest) {
+        this.sqlConstructorTest = sqlConstructorTest;
     }
 }

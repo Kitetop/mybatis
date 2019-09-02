@@ -36,9 +36,11 @@ public class DepartEntity {
         this.depart = depart.trim();
     }
 
-    public Map<String, String> getInfo() {
-        Map<String, String> info = new HashMap<>();
-        info.put("depart", "depart");
-        return info;
+    @Override
+    public String toString() {
+        return "DepartEntity{" +
+                "id=" + id +
+                ", depart='" + depart + '\'' +
+                '}';
     }
 }

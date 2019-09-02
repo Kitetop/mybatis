@@ -18,6 +18,8 @@ package demo.mybatis;
 import demo.entity.DepartEntity;
 import demo.service.DepartService;
 import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,22 +29,19 @@ import java.util.List;
  * @version Release: v1.0
  * Date: 2019/08/29
  */
-
+@Component
 public class ProviderTest {
-
     private DepartEntity departEntity;
     private List<DepartEntity> departs = new ArrayList<>();
     private DepartService departService;
 
-    public ProviderTest(DepartService service) {
-        this.init();
-        this.departService = service;
-    }
+    private ProviderTest() {}
 
     /**
      * Entry test method
      */
     public void entry() {
+        this.init();
         this.saveTest();
         this.saveAllTest();
         this.findById();
@@ -94,10 +93,15 @@ public class ProviderTest {
     private void init() {
         this.departEntity = new DepartEntity();
         departEntity.setDepart("SAVE_TEST");
-        DepartEntity entity = new DepartEntity();
         for(int i = 0; i < 5; i++) {
+            DepartEntity entity = new DepartEntity();
             entity.setDepart("SAVE_ALL" + i);
             this.departs.add(i, entity);
         }
+    }
+
+    @Autowired
+    public void setDepartService(DepartService departService) {
+        this.departService = departService;
     }
 }
