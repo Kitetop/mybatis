@@ -22,7 +22,7 @@ Some design for using mybatis in spring boot project，provider convenience for 
    on the Internet, I wish you happiness in your development.
 ````
 ---
-####Use with maven
+#### Use with maven
 ````
 1. Download the newest releases
 2. Go to the directory where the downloaded package is located， add this package to your maven repository
@@ -44,6 +44,6 @@ Welcome exchanges and refuse to slander or abuse
 Email：1363215999@qq.com
 You can contact me anytime if you have any suggestions or questions.
 ````
-####All the the core code of the design are located in：
+#### All the the core code of the design are located in：
 [src/main/java/com.xieshizhen](https://github.com/Kitetop/mybatis/tree/master/src/main/java/com/xieshizhen)
 ---
