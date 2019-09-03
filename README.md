@@ -1,6 +1,7 @@
 #### Description
 ````
-Function libraries for development activities, to facilitate the simple and rapid use of Mybatis, RabbitMQ, and so on in spring boot projects
+Function libraries for development activities, to facilitate the simple and rapid
+use of Mybatis, RabbitMQ, and so on in spring boot projects
 ````
 ---
 ## How to use
@@ -22,8 +23,10 @@ Function libraries for development activities, to facilitate the simple and rapi
 2. Go to the directory where the downloaded package is located， add this package to your maven repository
    run： mvn install:install-file -Dfile=./xxx.jar -DgrouId= xx.xx.xx -Dartifact xx-xx-xx 
          -Dversion=x.x.x -Dpackaging=jar
-   (X: You can fill in whatever you want, but it is recommended that you keep the same naming style as the maven package.)
-3. Add dependency in your project pom.xml file, for example:(Dependency information needs to be named the same as what you imported into the Maven Library)
+   (X: You can fill in whatever you want, but it is recommended that you keep the same naming style as
+   the maven package.)
+3. Add dependency in your project pom.xml file, for example:(Dependency information needs to be named t
+he same as what you imported into the Maven Library)
    <dependency>
         <groupId>xxx.xxx</groupId>
         <artifactId>xxx-xxx</artifactId>
