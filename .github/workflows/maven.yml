@@ -15,4 +15,4 @@ jobs:
     - name: Build Mysql Container
       run: cd mysql && mysql -uroot -proot < mysql.sql
     - name: Test
-      run: mvn package --file pom.xml
+      run: mvn clean package --file pom.xml
