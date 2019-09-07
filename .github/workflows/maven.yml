@@ -15,12 +15,12 @@ jobs:
     - name: Build Mysql Container
       run: cd mysql && mysql -uroot -proot < mysql.sql
     - name: test
-      run: pwd
+      run: pwd && ls
   test:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: pwd
+        run: pwd && ls
       - name: Build with Maven
         run: mvn package --file pom.xml
