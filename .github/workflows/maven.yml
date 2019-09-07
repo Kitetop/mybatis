@@ -1,10 +1,10 @@
 name: Java CI
-runs-on: ubuntu-latest
 on: 
   push:
     branches:
     - master
 jobs:
+  runs-on: ubuntu-latest
   build:
     steps:
     - uses: actions/checkout@v1
