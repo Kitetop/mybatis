@@ -13,7 +13,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build Mysql Container
-      run: cd mysql && docker build -f Dockerfile -t env:latest . && docker run -p 3306:3306 -d --name env env
+      run: cd mysql && mysql -uroot -proot < mysql.sql
   test:
     needs: build
     runs-on: ubuntu-latest
