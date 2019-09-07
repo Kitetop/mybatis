@@ -16,5 +16,6 @@ jobs:
       run: cd mysql && docker build -f Dockerfile -t env:latest && docker run -p 3306:3306 -d --name env
   test:
     needs: build
-    - name: Build with Maven
-      run: mvn package --file pom.xml
+    steps:
+      - name: Build with Maven
+        run: mvn package --file pom.xml
