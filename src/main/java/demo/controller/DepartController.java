@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.List;
 /**
  * @author Kitetop <1363215999@qq.com>
  * @version Release: v1.0
@@ -25,7 +25,10 @@ public class DepartController {
         this.departService = departService;
     }
     @GetMapping("/add")
-    public void add(DepartEntity depart) {
+    public Integer add(DepartEntity depart) {
         departService.save(depart);
+        String name = depart.getDepart();
+        List<DepartEntity> entity = departService.findByName("depart = '" + name + "'");
+        return entity.get(0).getId();
     }
 }
