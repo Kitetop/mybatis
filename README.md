@@ -4,7 +4,19 @@ Function libraries for development activities, to facilitate the simple and rapi
 use of Mybatis, RabbitMQ, and so on in spring boot projects
 ````
 ---
-## How to use
+## How to quickly build this project 
+If you already have docker installed， and just want to try this project, Follow 
+the steps below and you will be able to build this project quickly.
+````
+git clone https://github.com/Kitetop/mybatis.git
+cd mybatis && docker-compose up
+````
+- The first build requires a little time， because it need two docker image
+- It won't use your local database, but build a database of its own
+- You can customize the data structure of this database by modifying the ./mysql/mysql.sql file.
+- When you want to remove this project, just use docker to stop the container and clear the created image.
+---
+## How to use the Library
 ---
 ````
 1. Go to releases, download the newest releases
@@ -16,7 +28,7 @@ use of Mybatis, RabbitMQ, and so on in spring boot projects
    on the Internet, I wish you happiness in your development.
 ````
 ---
-#### Use with maven
+#### Use this Library with maven
 ---
 ````
 1. Download the newest releases
